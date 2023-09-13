@@ -111,7 +111,7 @@ addBtn.addEventListener("click", (e) => {
       date: `${year}년 ${month}월 ${day}일`,
     };
 
-    //업데이트가 아니면 입력하고 맞으면 해당id의 값을 수정하기
+    //내용이 변경된게 없으면 그냥 입력하고 있으면 해당id의 값을 수정하기
     if (!isUpdate) {
       notes.push(noteInfo);
     } else {
