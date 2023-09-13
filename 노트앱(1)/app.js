@@ -80,3 +80,47 @@ function deleteNote(noteId) {
 }
 
 //수정클릭시
+function updateNote(noteId, title, filterDesc) {
+  let description = filterDesc.replaceAll("<br/>", "\r\n");
+  //<br> 을 \r\n 로 변경
+  updateId = noteId;
+  isUpdate = true;
+  addBox.click();
+  titleTag.value = title;
+  descTag.value = description;
+  popupTitle.innerText = "노트 수정하기";
+  addBtn.innerText = "수정하기";
+}
+
+//수정하기 클릭하면
+addBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  let title = titleTag.value.trim(),
+    description = descTag.value.trim();
+
+  if (title || description) {
+    let currentDate = new Date(),
+      month = currentDate.getMonth(),
+      day = currentDate.getDate(),
+      year = currentDate.getFullYear();
+
+    //노트 형식
+    let noteInfo = {
+      title: title,
+      description: description,
+      date: `${year}년 ${month}월 ${day}일`,
+    };
+
+    //업데이트가 아니면 입력하고 맞으면 해당id의 값을 수정하기
+    if (!isUpdate) {
+      notes.push(noteInfo);
+    } else {
+      isUpdate = false;
+      notes[updateId] = noteInfo;
+    }
+    //객체를 다시 문자열로 변환
+    localStorage.setItem("notes", JSON.stringify(notes));
+    showNotes();
+    closeIcon.click();
+  }
+});
